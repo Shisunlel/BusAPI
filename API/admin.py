@@ -325,8 +325,6 @@ def add_bus():
                   'VALUES (%s, %s)'
             values = [bus_id, str(x), ]
             mycursor.execute(sql, values)
-            mydb.commit()
-            time.sleep(0.3)
 
     except Exception as e:
         response = {
@@ -336,6 +334,7 @@ def add_bus():
         }
         return jsonify(response)
     else:
+        mydb.commit()
         response = {
             "data": req,
             "status": True,
