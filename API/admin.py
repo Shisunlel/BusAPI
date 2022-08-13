@@ -574,8 +574,8 @@ def end_trip():
     try:
         sql = 'BEGIN;' \
                 'UPDATE trip SET status = 0 WHERE id = %s; ' \
-                'UPDATE bus SET status = 1 FROM bus JOIN trip ON trip.bus_id = bus.id WHERE trip.id = %s; ' \
-                'UPDATE bus_seat SET status = 1 FROM bus_seat JOIN trip ON trip.bus_id = bus_seat.bus_id WHERE trip.id = %s; ' \
+                'UPDATE bus SET status = 1 FROM trip ON trip.bus_id = bus.id WHERE trip.id = %s; ' \
+                'UPDATE bus_seat SET status = 1 FROM trip ON trip.bus_id = bus_seat.bus_id WHERE trip.id = %s; ' \
                 'COMMIT;'
         values = [req['trip_id'],req['trip_id'],req['trip_id'], ]
         mycursor.execute(sql, values)
