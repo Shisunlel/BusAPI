@@ -573,9 +573,9 @@ def end_trip():
         return jsonify(response)
     try:
         sql = 'BEGIN;' \
-                'UPDATE trip SET trip.status = 0 WHERE trip.id = %s; ' \
+                'UPDATE trip SET status = 0 WHERE id = %s; ' \
                 'UPDATE bus SET bus.status = 1 FROM bus JOIN trip ON trip.bus_id = bus.id WHERE trip.id = %s; ' \
-                'UPDATE bus_seat SET bus_seat.status = 1 FROm bus_seat JOIN trip ON trip.bus_id = bus_seat.bus_id WHERE trip.id = %s;' \
+                'UPDATE bus_seat SET bus_seat.status = 1 FROM bus_seat JOIN trip ON trip.bus_id = bus_seat.bus_id WHERE trip.id = %s; ' \
                 'COMMIT;'
         values = [req['trip_id'],req['trip_id'],req['trip_id'], ]
         mycursor.execute(sql, values)
