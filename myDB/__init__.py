@@ -1,4 +1,5 @@
-import mysql.connector
+# import mysql.connector
+from psycopg2 import connect, extras
 
 '''
 For cloud
@@ -16,21 +17,17 @@ passwd=""
 database="bus_reservation"
 '''
 
-
-"""For Using Cloud"""
-mydb = mysql.connector.connect(
-    host="b5grqlbaqnhiu3xs5zqs-mysql.services.clever-cloud.com",
-    user="umirqrxz6pdfjjpo",
-    passwd="4Lj01OwXEH0e5t7ZKIFU",
-    database="b5grqlbaqnhiu3xs5zqs"
-)
-
-"""For Using Local"""
 # mydb = mysql.connector.connect(
-#     host="localhost",
-#     user="root",
-#     passwd="",
-#     database="bus_reservation"
+#     host="b5grqlbaqnhiu3xs5zqs-mysql.services.clever-cloud.com",
+#     user="umirqrxz6pdfjjpo",
+#     passwd="4Lj01OwXEH0e5t7ZKIFU",
+#     database="b5grqlbaqnhiu3xs5zqs"
 # )
 
+database = "rwmprcfu"
+user = "rwmprcfu"
+password = "PMATMochoBaVnxc9UvDabt-dk8KDcEIQ"
+host = "arjuna.db.elephantsql.com"
+
+mydb = connect(database=database, user=user, password=password, host=host)
 mycursor = mydb.cursor()
