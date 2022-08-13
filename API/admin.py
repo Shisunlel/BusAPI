@@ -572,9 +572,11 @@ def end_trip():
         }
         return jsonify(response)
     try:
-        sql = 'UPDATE trip, bus, bus_seat ' \
-              'SET trip.status = 0, bus.status = 1, bus_seat.status = 1 ' \
-              'WHERE trip.id = %s AND trip.bus_id = bus.id AND trip.bus_id = bus_seat.bus_id'
+        sql = 'BEGIN;' \
+                'UPDATE trip SET trip.status = 0 WHERE trip.id = %s;' \
+                'UPDATE bus SET bus.status = 1 JOIN trip ON trip.bus_id = bus.id WHERE trip.id = %s; ' \
+                'UPDATE bus_seat SET bus_seat.status = 1 JOIN trip ON trip.bus_id = bus_seat.bus_id WHERE trip.id = %s;' \
+                'COMMIT;'
         values = [req['trip_id'], ]
         mycursor.execute(sql, values)
         mydb.commit()
@@ -584,6 +586,7 @@ def end_trip():
             "status": False,
             "message": f"{e}"
         }
+        mydb.rollback()
         return jsonify(response)
     else:
         response = {
