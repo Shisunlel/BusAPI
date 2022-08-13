@@ -577,7 +577,7 @@ def end_trip():
                 'UPDATE bus SET bus.status = 1 JOIN trip ON trip.bus_id = bus.id WHERE trip.id = %s; ' \
                 'UPDATE bus_seat SET bus_seat.status = 1 JOIN trip ON trip.bus_id = bus_seat.bus_id WHERE trip.id = %s;' \
                 'COMMIT;'
-        values = [req['trip_id'], ]
+        values = [req['trip_id'],req['trip_id'],req['trip_id'], ]
         mycursor.execute(sql, values)
         mydb.commit()
     except Exception as e:
